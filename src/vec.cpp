@@ -55,3 +55,10 @@ double dot(const Vec3& a, const Vec3& b)
 {
     return a.x * b.x + a.y * b.y + a.z * b.z;
 }
+
+Vec3 cross(const Vec3& u, const Vec3& v)
+{
+    return Vec3(u.y * v.z - u.z * v.y,
+            u.z * v.x - u.x * v.z,
+            u.x * v.y - u.y * v.x);
+}
