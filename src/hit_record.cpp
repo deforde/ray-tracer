@@ -2,7 +2,6 @@
 
 HitRecord::HitRecord()
 {
-
 }
 
 void HitRecord::set_face_normal(const Ray& r, const Vec3& outward_normal) {

@@ -5,6 +5,7 @@
 class Ray
 {
 public:
+    Ray();
     Ray(const Vec3& orig, const Vec3& d);
 
     Point3 at(double t) const;

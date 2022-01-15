@@ -2,9 +2,10 @@
 
 #include <cmath>
 
-Sphere::Sphere(const Point3& cen, double r):
+Sphere::Sphere(const Point3& cen, double r, const std::shared_ptr<Material>& mat):
     center(cen),
-    radius(r)
+    radius(r),
+    material(mat)
 {}
 
 bool Sphere::hit(const Ray& r, double t_min, double t_max, HitRecord& rec) const
@@ -31,6 +32,7 @@ bool Sphere::hit(const Ray& r, double t_min, double t_max, HitRecord& rec) const
     rec.p = r.at(rec.t);
     Vec3 outward_normal = (rec.p - center) / radius;
     rec.set_face_normal(r, outward_normal);
+    rec.material = material;
 
     return true;
 }

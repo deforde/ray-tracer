@@ -3,6 +3,8 @@
 #include <cmath>
 #include <random>
 
+#include "material.h"
+
 double clamp(double x, double min, double max)
 {
     if (x < min) return min;
@@ -76,15 +78,25 @@ Colour ray_colour(const Ray& r, const HittableList& world, int32_t depth)
 
     HitRecord rec;
     if(world.hit(r, 0.001, std::numeric_limits<double>::max(), rec)) {
-        // return (rec.normal + Colour(1,1,1)) * 0.5;
-
-        // const Point3 target = rec.p + rec.normal + random_in_unit_sphere();
-        // return ray_colour(Ray(rec.p, target - rec.p), world, depth - 1) * 0.5;
-
-        const Point3 target = rec.p + random_in_hemisphere(rec.normal);
-        return ray_colour(Ray(rec.p, target - rec.p), world, depth - 1) * 0.5;
+        Ray scattered;
+        Colour attenuation;
+        if(rec.material->scatter(r, rec, attenuation, scattered))
+            return attenuation * ray_colour(scattered, world, depth-1);
+        return {0,0,0};
     }
+
     const auto unit_direction = unit_vector(r.dir);
     auto t = 0.5 * (unit_direction.y + 1.0);
     return Colour(1.0, 1.0, 1.0) * (1.0 - t) + Colour(0.5, 0.7, 1.0) * t;
+}
+
+bool is_vec_near_zero(const Vec3& v)
+{
+    const auto s = 1e-8;
+    return (std::fabs(v.x) < s) && (std::fabs(v.x) < s) && (std::fabs(v.x) < s);
+}
+
+Vec3 reflect(const Vec3& v, const Vec3& n)
+{
+    return v - n * 2 * dot(v,n);
 }

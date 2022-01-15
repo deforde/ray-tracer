@@ -4,7 +4,8 @@
 
 #include "ray.h"
 #include "vec.h"
-//#include "material.h"
+
+class Material;
 
 class HitRecord {
 public:
@@ -15,5 +16,5 @@ public:
     Vec3 normal;
     double t = 0.0;
     bool front_face = false;
-    //std::shared_ptr<Material> material;
+    std::shared_ptr<Material> material;
 };

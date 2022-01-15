@@ -13,7 +13,9 @@
 #include "hit_record.h"
 #include "hittable_list.h"
 #include "hittable.h"
+#include "lambertian.h"
 #include "material.h"
+#include "metal.h"
 #include "ray.h"
 #include "sphere.h"
 #include "util.h"
@@ -38,8 +40,14 @@ int main()
 
     // World
     HittableList world;
-    world.add(std::make_shared<Sphere>(Point3(0, 0, -1), 0.5));
-    world.add(std::make_shared<Sphere>(Point3(0, -100.5, -1), 100));
+    const auto material_ground = std::make_shared<Lambertian>(Colour(0.8, 0.8, 0.0));
+    const auto material_center = std::make_shared<Lambertian>(Colour(0.7, 0.3, 0.3));
+    const auto material_left   = std::make_shared<Metal>(Colour(0.8, 0.8, 0.8));
+    const auto material_right  = std::make_shared<Metal>(Colour(0.8, 0.6, 0.2));
+    world.add(std::make_shared<Sphere>(Point3( 0.0, -100.5, -1.0), 100.0, material_ground));
+    world.add(std::make_shared<Sphere>(Point3( 0.0,    0.0, -1.0),   0.5, material_center));
+    world.add(std::make_shared<Sphere>(Point3(-1.0,    0.0, -1.0),   0.5, material_left));
+    world.add(std::make_shared<Sphere>(Point3( 1.0,    0.0, -1.0),   0.5, material_right));
 
     // Camera
     Camera cam;
