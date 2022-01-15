@@ -1,7 +1,8 @@
 #include "ray.h"
 
 Ray::Ray()
-{}
+{
+}
 
 Ray::Ray(const Vec3& orig, const Vec3& d) :
     origin(orig),

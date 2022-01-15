@@ -42,8 +42,8 @@ int main()
     HittableList world;
     const auto material_ground = std::make_shared<Lambertian>(Colour(0.8, 0.8, 0.0));
     const auto material_center = std::make_shared<Lambertian>(Colour(0.7, 0.3, 0.3));
-    const auto material_left   = std::make_shared<Metal>(Colour(0.8, 0.8, 0.8));
-    const auto material_right  = std::make_shared<Metal>(Colour(0.8, 0.6, 0.2));
+    const auto material_left   = std::make_shared<Metal>(Colour(0.8, 0.8, 0.8), 0.3);
+    const auto material_right  = std::make_shared<Metal>(Colour(0.8, 0.6, 0.2), 1.0);
     world.add(std::make_shared<Sphere>(Point3( 0.0, -100.5, -1.0), 100.0, material_ground));
     world.add(std::make_shared<Sphere>(Point3( 0.0,    0.0, -1.0),   0.5, material_center));
     world.add(std::make_shared<Sphere>(Point3(-1.0,    0.0, -1.0),   0.5, material_left));
@@ -55,8 +55,7 @@ int main()
     // Rendering
     std::cout << "Rendering...\n";
     for(int64_t i = image_height - 1; i >= 0; --i) {
-        //std::cout << '\r' << std::setw(3) << static_cast<uint32_t>(100.0f * i / image_height) << "%";
-        std::cout << static_cast<uint32_t>(100.0 * (1.0 - (static_cast<double>(i) / image_height))) << "%\n";
+        std::cout << std::setw(3) << static_cast<uint32_t>(100.0 * (1.0 - (static_cast<double>(i) / image_height))) << "%\r" << std::flush;
         for(size_t j = 0; j < image_width; ++j) {
             Colour pixel_colour;
             for(size_t n = 0; n < samples_per_pixel; ++n) {

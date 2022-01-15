@@ -1,5 +1,6 @@
 #include "util.h"
 
+#include <algorithm>
 #include <cmath>
 #include <random>
 
@@ -7,8 +8,8 @@
 
 double clamp(double x, double min, double max)
 {
-    if (x < min) return min;
-    if (x > max) return max;
+    x = std::max(x, min);
+    x = std::min(x, max);
     return x;
 }
 
@@ -47,7 +48,7 @@ Vec3 random_vec(double min, double max)
     return {random_double(min, max), random_double(min, max), random_double(min, max)};
 }
 
-Vec3 random_in_unit_sphere()
+Vec3 random_vec_in_unit_sphere()
 {
     for(;;) {
         const auto p = random_vec(-1,1);
@@ -57,14 +58,14 @@ Vec3 random_in_unit_sphere()
     }
 }
 
-Vec3 random_unit_vector()
+Vec3 random_unit_vec()
 {
-    return unit_vector(random_in_unit_sphere());
+    return unit_vec(random_vec_in_unit_sphere());
 }
 
-Vec3 random_in_hemisphere(const Vec3& normal)
+Vec3 random_vec_in_hemisphere(const Vec3& normal)
 {
-    Vec3 in_unit_sphere = random_in_unit_sphere();
+    Vec3 in_unit_sphere = random_vec_in_unit_sphere();
     if (dot(in_unit_sphere, normal) > 0.0) // In the same hemisphere as the normal
         return in_unit_sphere;
     else
@@ -85,7 +86,7 @@ Colour ray_colour(const Ray& r, const HittableList& world, int32_t depth)
         return {0,0,0};
     }
 
-    const auto unit_direction = unit_vector(r.dir);
+    const auto unit_direction = unit_vec(r.dir);
     auto t = 0.5 * (unit_direction.y + 1.0);
     return Colour(1.0, 1.0, 1.0) * (1.0 - t) + Colour(0.5, 0.7, 1.0) * t;
 }
@@ -96,7 +97,7 @@ bool is_vec_near_zero(const Vec3& v)
     return (std::fabs(v.x) < s) && (std::fabs(v.x) < s) && (std::fabs(v.x) < s);
 }
 
-Vec3 reflect(const Vec3& v, const Vec3& n)
+Vec3 vec_reflect(const Vec3& v, const Vec3& n)
 {
     return v - n * 2 * dot(v,n);
 }

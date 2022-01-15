@@ -1,7 +1,8 @@
 #include "hittable_list.h"
 
 HittableList::HittableList()
-{}
+{
+}
 
 HittableList::HittableList(std::shared_ptr<Hittable> object)
 {
@@ -13,7 +14,8 @@ void HittableList::clear()
     objects.clear();
 }
 
-void HittableList::add(std::shared_ptr<Hittable> object) {
+void HittableList::add(std::shared_ptr<Hittable> object)
+{
     objects.push_back(object);
 }
 

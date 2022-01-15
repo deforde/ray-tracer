@@ -46,7 +46,7 @@ Vec3 operator-(const Vec3& a, const Vec3& b)
     return a + b * -1.0;
 }
 
-Vec3 unit_vector(const Vec3& v)
+Vec3 unit_vec(const Vec3& v)
 {
     return v / v.length();
 }

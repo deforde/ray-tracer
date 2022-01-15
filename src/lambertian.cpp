@@ -9,7 +9,7 @@ Lambertian::Lambertian(const Colour& a) :
 
 bool Lambertian::scatter(const Ray& r_in, const HitRecord& rec, Colour& attenuation, Ray& scattered) const
 {
-    auto scatter_direction = rec.normal + random_unit_vector();
+    auto scatter_direction = rec.normal + random_unit_vec();
 
     if(is_vec_near_zero(scatter_direction))
         scatter_direction = rec.normal;
