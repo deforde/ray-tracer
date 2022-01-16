@@ -28,35 +28,35 @@ HittableList random_scene() {
     const auto ground_material = std::make_shared<Lambertian>(Colour(0.5, 0.5, 0.5));
     world.add(std::make_shared<Sphere>(Point3(0,-1000,0), 1000, ground_material));
 
-    // for(int32_t a = -2; a < 2; a++) {
-    //     for(int32_t b = -2; b < 2; b++) {
-    //         const auto choose_mat = random_double();
-    //         Point3 center(a + 0.9 * random_double(), 0.2, b + 0.9 * random_double());
+    for(int32_t a = -11; a < 11; a++) {
+        for(int32_t b = -11; b < 11; b++) {
+            const auto choose_mat = random_double();
+            Point3 center(a + 0.9 * random_double(), 0.2, b + 0.9 * random_double());
 
-    //         if ((center - Point3(4, 0.2, 0)).length() > 0.9) {
-    //             std::shared_ptr<Material> sphere_material;
+            if ((center - Point3(4, 0.2, 0)).length() > 0.9) {
+                std::shared_ptr<Material> sphere_material;
 
-    //             if(choose_mat < 0.8) {
-    //                 // diffuse
-    //                 auto albedo = random_vec() * random_vec();
-    //                 sphere_material = std::make_shared<Lambertian>(albedo);
-    //                 world.add(std::make_shared<Sphere>(center, 0.2, sphere_material));
-    //             }
-    //             else if(choose_mat < 0.95) {
-    //                 // metal
-    //                 auto albedo = random_vec(0.5, 1);
-    //                 auto fuzz = random_double(0, 0.5);
-    //                 sphere_material = std::make_shared<Metal>(albedo, fuzz);
-    //                 world.add(std::make_shared<Sphere>(center, 0.2, sphere_material));
-    //             }
-    //             else {
-    //                 // glass
-    //                 sphere_material = std::make_shared<Dielectric>(1.5);
-    //                 world.add(std::make_shared<Sphere>(center, 0.2, sphere_material));
-    //             }
-    //         }
-    //     }
-    // }
+                if(choose_mat < 0.8) {
+                    // diffuse
+                    auto albedo = random_vec() * random_vec();
+                    sphere_material = std::make_shared<Lambertian>(albedo);
+                    world.add(std::make_shared<Sphere>(center, 0.2, sphere_material));
+                }
+                else if(choose_mat < 0.95) {
+                    // metal
+                    auto albedo = random_vec(0.5, 1);
+                    auto fuzz = random_double(0, 0.5);
+                    sphere_material = std::make_shared<Metal>(albedo, fuzz);
+                    world.add(std::make_shared<Sphere>(center, 0.2, sphere_material));
+                }
+                else {
+                    // glass
+                    sphere_material = std::make_shared<Dielectric>(1.5);
+                    world.add(std::make_shared<Sphere>(center, 0.2, sphere_material));
+                }
+            }
+        }
+    }
 
     auto material1 = std::make_shared<Dielectric>(1.5);
     world.add(std::make_shared<Sphere>(Point3(0, 1, 0), 1.0, material1));
@@ -73,11 +73,11 @@ HittableList random_scene() {
 int main()
 {
     // Image
-    const auto aspect_ratio = 1.0;
-    const size_t image_width = 600;
+    const auto aspect_ratio = 3.0 / 2.0;
+    const size_t image_width = 1200;
     const auto image_height = static_cast<size_t>(image_width / aspect_ratio);
     const char* image_output_file_path = "image.ppm";
-    const size_t samples_per_pixel = 100;
+    const size_t samples_per_pixel = 500;
     const int32_t max_depth = 50;
 
     std::ofstream file(image_output_file_path, std::ios::out);
