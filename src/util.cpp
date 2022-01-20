@@ -104,7 +104,7 @@ Colour ray_colour(const Ray& r, const HittableList& world, int32_t depth)
 bool is_vec_near_zero(const Vec3& v)
 {
     const auto s = 1e-8;
-    return (std::fabs(v.x) < s) && (std::fabs(v.x) < s) && (std::fabs(v.x) < s);
+    return (std::fabs(v.x) < s) && (std::fabs(v.y) < s) && (std::fabs(v.z) < s);
 }
 
 Vec3 vec_reflect(const Vec3& v, const Vec3& n)
